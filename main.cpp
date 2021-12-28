@@ -17,7 +17,7 @@ class Mod : GenericMod {
 	{
 		cube::Equipment* equipment = &player->entity_data.equipment;
 
-		if (std::rand() % 1 == 0)
+		if (std::rand() % 2 == 0)
 		{
 			std::vector<cube::Item*> items;
 
