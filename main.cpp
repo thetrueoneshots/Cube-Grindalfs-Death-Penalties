@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdlib.h>
+#include <vector>
 
 // Public variables.
 // For example: int number = 10;
@@ -18,59 +19,65 @@ class Mod : GenericMod {
 
 		if (std::rand() % 1 == 0)
 		{
-			cube::Item item;
-			switch (std::rand() % 10)
+			std::vector<cube::Item*> items;
+
+			if (equipment->chest.category != 0)
 			{
-			case 0:
-				item = equipment->chest;
-				equipment->chest = cube::Item(0, 0);
-				break;
-			case 1:
-				item = equipment->feet;
-				equipment->feet = cube::Item(0, 0);
-				break;
-			case 2:
-				item = equipment->hands;
-				equipment->hands = cube::Item(0, 0);
-				break;
-			case 3:
-				item = equipment->neck;
-				equipment->neck = cube::Item(0, 0);
-				break;
-			case 4:
-				item = equipment->pet;
-				equipment->pet = cube::Item(0, 0);
-				break;
-			case 5:
-				item = equipment->ring_left;
-				equipment->ring_left = cube::Item(0, 0);
-				break;
-			case 6:
-				item = equipment->ring_right;
-				equipment->ring_right = cube::Item(0, 0);
-				break;
-			case 7:
-				item = equipment->shoulder;
-				equipment->shoulder = cube::Item(0, 0);
-				break;
-			case 8:
-				item = equipment->weapon_left;
-				equipment->weapon_left = cube::Item(0, 0);
-				break;
-			case 9:
-			default:
-				item = equipment->weapon_right;
-				equipment->weapon_right = cube::Item(0, 0);
-				break;
+				items.push_back(&equipment->chest);
 			}
 
-			if (item.category == 0)
+			if (equipment->feet.category != 0)
+			{
+				items.push_back(&equipment->feet);
+			}
+
+			if (equipment->hands.category != 0)
+			{
+				items.push_back(&equipment->hands);
+			}
+
+			if (equipment->neck.category != 0)
+			{
+				items.push_back(&equipment->neck);
+			}
+
+			if (equipment->ring_left.category != 0)
+			{
+				items.push_back(&equipment->ring_left);
+			}
+
+			if (equipment->ring_right.category != 0)
+			{
+				items.push_back(&equipment->ring_right);
+			}
+
+			if (equipment->shoulder.category != 0)
+			{
+				items.push_back(&equipment->shoulder);
+			}
+
+			if (equipment->weapon_left.category != 0)
+			{
+				items.push_back(&equipment->weapon_left);
+			}
+
+			if (equipment->weapon_right.category != 0)
+			{
+				items.push_back(&equipment->weapon_right);
+			}
+
+			if (items.size() <= 0)
 			{
 				return;
 			}
 
+			cube::Item* item = items.at(std::rand() % items.size());
+
 			game->PrintMessage(L"You dropped some equipment...\n", 255, 125, 0);
-			game->host.world.DropItem(&item, &player->entity_data.position);
+			game->host.world.DropItem(item, &player->entity_data.position);
+
+			// Reset item after DropItem is called, so a dropped copy is made.
+			*item = cube::Item(0, 0);
 		}
 	}
 };
