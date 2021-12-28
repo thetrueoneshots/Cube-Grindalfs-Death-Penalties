@@ -1,0 +1,5 @@
+cmake_minimum_required (VERSION 3.8)
+project("project_Grindalfs Death Penalties")
+add_subdirectory(CWSDK)
+add_library (GrindalfsDeathPenalties SHARED "main.cpp")
+target_link_libraries (GrindalfsDeathPenalties LINK_PUBLIC CWSDK)
