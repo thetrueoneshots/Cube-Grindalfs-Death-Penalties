@@ -103,6 +103,15 @@ class Mod : GenericMod {
 		DeleteCharacter(game);
 	}
 
+	void OnCreatureDeath(cube::Game* game, cube::Creature* creature) {
+		cube::Creature* local_player = game->GetPlayer();
+
+		if (creature->id == local_player->pet_id)
+		{
+			local_player->entity_data.equipment.pet = cube::Item(0, 0);
+		}
+	}
+
 	int OnChat(std::wstring* message)
 	{
 		const wchar_t* msg = message->c_str();
